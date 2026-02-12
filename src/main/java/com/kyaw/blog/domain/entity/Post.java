@@ -31,6 +31,10 @@ public class Post {
     @Enumerated(EnumType.STRING)
     private PostStatus status;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id", nullable = false)
+    private User author;
+
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
