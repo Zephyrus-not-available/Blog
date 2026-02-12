@@ -22,6 +22,10 @@ public class Category {
     @Column(nullable = false, unique = true)
     private String name;
 
+    @OneToOne(mappedBy = "category", fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id", nullable = false)
+    private Post post;
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
