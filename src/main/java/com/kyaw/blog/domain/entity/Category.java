@@ -25,7 +25,7 @@ public class Category {
     private String name;
 
     @OneToMany(mappedBy = "category")
-    private List<Post> post = new ArrayList<>();
+    private List<Post> posts = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
