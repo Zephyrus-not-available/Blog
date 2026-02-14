@@ -30,7 +30,7 @@ public class CategoryController {
 
     @PostMapping
     public ResponseEntity<CategoryDto> createCategory(
-            @RequestBody @Valid Category createCategory) {
+           @Valid @RequestBody  Category createCategory) {
         Category createdCategory = categoryMapper.toEntity(createCategory);
         Category savedCategory = categoryService.createCategory(createdCategory);
 
