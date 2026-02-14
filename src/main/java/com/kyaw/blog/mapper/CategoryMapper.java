@@ -16,6 +16,8 @@ public interface CategoryMapper {
     @Mapping(target = "postCount", source = "posts", qualifiedByName = "calculatePostCount")
     CategoryDto toDto(Category category);
 
+    Category toEntity(Category createCategory);
+
     @Named("calculatePostCount")
     default long calculatePostCount(List<Post> posts) {
         return posts == null ? 0 : posts.stream().filter(post -> post != null).count();

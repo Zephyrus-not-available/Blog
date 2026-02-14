@@ -3,6 +3,7 @@ package com.kyaw.blog.service.impl;
 import com.kyaw.blog.domain.entity.Category;
 import com.kyaw.blog.repository.CategoryRepository;
 import com.kyaw.blog.service.CategoryService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,5 +19,14 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<Category> getCategories() {
         return categoryRepository.findAll();
+    }
+
+    @Override
+    @Transactional
+    public Category createCategory(Category createdCategory) {
+        if(categoryRepository.existsByNameIgnoreCase(createdCategory.getName())){
+            throw new IllegalArgumentException("Category with name '" + createdCategory.getName() + "' already exists.");
+        }
+        return categoryRepository.save(createdCategory);
     }
 }

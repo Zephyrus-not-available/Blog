@@ -4,11 +4,11 @@ import com.kyaw.blog.domain.dto.CategoryDto;
 import com.kyaw.blog.domain.entity.Category;
 import com.kyaw.blog.mapper.CategoryMapper;
 import com.kyaw.blog.service.CategoryService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,6 +26,17 @@ public class CategoryController {
                 .map(categoryMapper::toDto)
                 .toList();
         return ResponseEntity.ok(categoryDtos);
+    }
 
+    @PostMapping
+    public ResponseEntity<CategoryDto> createCategory(
+            @RequestBody @Valid Category createCategory) {
+        Category createdCategory = categoryMapper.toEntity(createCategory);
+        Category savedCategory = categoryService.createCategory(createdCategory);
+
+        return new ResponseEntity<>(
+                categoryMapper.toDto(savedCategory),
+                HttpStatus.CREATED
+        );
     }
 }
