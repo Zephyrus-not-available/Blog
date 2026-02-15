@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
@@ -29,4 +31,17 @@ public class CategoryServiceImpl implements CategoryService {
         }
         return categoryRepository.save(createdCategory);
     }
+
+    @Override
+    public void deleteCategory(UUID id) {
+        Optional<Category> categoryOptional = categoryRepository.findById(id);
+        if(categoryOptional.isPresent()) {
+            if (categoryOptional.isEmpty()) {
+                throw new IllegalArgumentException("Category with id '" + id + "' not found.");
+            }
+            categoryRepository.deleteById(id);
+        }
+    }
+
+
 }
