@@ -13,3 +13,9 @@ spring:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+# JWT configuration
+app:
+  security:
+    jwt:
+      secret: "your-256-bit-secret-key-here-make-it-at-least-32-bytes-long"
